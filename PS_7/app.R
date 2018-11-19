@@ -45,8 +45,8 @@ ui <- fluidPage(
     
     mainPanel(
       plotOutput(outputId = "scatterplot"),
-      p("Choose from the States in the side panel to investigate how the predicted republican advantage results differed from the actual results"),
-      p("You can also flip the axis for another view, if you want")
+      p("Choose from the different parties to see how polling margin of errors vary with voter turnout."),
+      p("You can also select which state elections you would like to view.")
       
     )
     
@@ -66,10 +66,13 @@ server <- function(input, output) {
   output$scatterplot <- renderPlot({
     
     #Create visualization using ggplot 
-    ggplot(data = states_subset(), aes_string(x = "total", y = input$demographic, color = "Win_Party")) +
-      geom_point(size = 3, alpha = 0.8)  +
+    ggplot(data = states_subset(), aes_string(x = "total", y = input$demographic)) +
+      geom_point(size = 3, alpha = 0.8, aes(color = Win_Party))  +
+      geom_smooth(method = "lm", color = "black") +
       geom_abline() +
-      labs(color = "District") +
+      scale_color_manual(labels = c("D" = "Democratic Party", "R" = "Republican Party", "UNDECIDED" = "Undecided"),
+                         values = c("blue", "red", "grey")) +
+      labs(color = "Winning Party", x = "Voter Turnout") +
       ggtitle("Margin of Error vs Voter Turnout by District")
   })
 }
