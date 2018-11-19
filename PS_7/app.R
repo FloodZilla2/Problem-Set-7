@@ -36,7 +36,7 @@ ui <- fluidPage(
       checkboxGroupInput(inputId = "selected_type",
                          label = "Select State(s):",
                          choices = c("AZ","CA","CO","FL","GA","IL","IA","KS","KY","ME","MI","MN","NJ","NM","NY","NC","OH","PA","TX","UT","VA","WA","WV"),
-                         selected = "CA")
+                         selected = c("AZ","CA","CO","FL","GA","IL","IA","KS","KY","ME","MI","MN","NJ","NM","NY","NC","OH","PA","TX","UT","VA","WA","WV"))
       
     ),
     
@@ -66,7 +66,7 @@ server <- function(input, output) {
   output$scatterplot <- renderPlot({
     
     #Create visualization using ggplot 
-    ggplot(data = states_subset(), aes_string(x = "total", y = input$demographic, color = "state_dist")) +
+    ggplot(data = states_subset(), aes_string(x = "total", y = input$demographic, color = "Win_Party")) +
       geom_point(size = 3, alpha = 0.8)  +
       geom_abline() +
       labs(color = "District") +

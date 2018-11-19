@@ -65,7 +65,7 @@ pred_wave_3$response[pred_wave_3$response==6] <- "Und"
  
  final <- left_join(results, pred_district, by = "state_dist") %>% 
    filter(!is.na(Dem)) %>% 
-   transmute( state = state, district = district, state_dist = state_dist, Dem_Pred = Dem, Rep_Pred = Rep, Und_Pred = Und, Dem_Act = dem, Rep_Act = rep, Und_Act = other, Winner = win_name, total = total.x) %>% 
+   transmute( state = state, district = district, state_dist = state_dist, Dem_Pred = Dem, Rep_Pred = Rep, Und_Pred = Und, Dem_Act = dem, Rep_Act = rep, Und_Act = other, Winner = win_name, total = total.x, Win_Party = win_party) %>% 
    mutate(Dem_Pred = Dem_Pred *100, Rep_Pred = Rep_Pred *100, Und_Pred = Und_Pred *100, Dem_Act = Dem_Act*100, Rep_Act = Rep_Act*100, Und_Act = Und_Act *100 ) %>% 
    mutate(Dem_Error = Dem_Act - Dem_Pred, Rep_Error = Rep_Act - Rep_Pred, Und_Error = Und_Act - Und_Pred)
  
